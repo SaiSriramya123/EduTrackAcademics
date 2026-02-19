@@ -15,5 +15,6 @@ namespace EduTrackAcademics.Data
         }
 
         public DbSet<EduTrackAcademics.Model.Course> Course { get; set; } = default!;
+        public DbSet<EduTrackAcademics.Model.AcademicReport> AcademicReport { get; set; } = default!;
     }
 }
