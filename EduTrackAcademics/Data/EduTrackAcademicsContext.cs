@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using EduTrackAcademics.Model;
+using EducationTrackProject.Models;
 
 namespace EduTrackAcademics.Data
 {
@@ -15,7 +16,9 @@ namespace EduTrackAcademics.Data
         }
 
         public DbSet<EduTrackAcademics.Model.Course> Course { get; set; } = default!;
+
         public DbSet<EduTrackAcademics.Model.Student> Student { get; set; } = default!;
-	}=
+        public DbSet<EducationTrackProject.Models.Enrollment> Enrollment { get; set; } = default!;
+
     }
 }
