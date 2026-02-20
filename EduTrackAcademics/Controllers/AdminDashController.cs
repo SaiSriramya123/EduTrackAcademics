@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using EduTrackAcademics.Data;
 using EduTrackAcademics.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,23 +9,23 @@ namespace EduTrackAcademics.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProgramsController : ControllerBase
+    public class AdminDashController : ControllerBase
     {
-        private readonly DbContext _context;
+        private readonly EduTrackAcademicsContext _context;
 
-        public ProgramsController(DbContext context)
+        public AdminDashController(EduTrackAcademicsContext context)
         {
             _context = context;
         }
 
-        // GET: api/Programs
+        // GET: api/AdminDash
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Programs>>> GetPrograms()
         {
             return await _context.Set<Programs>().ToListAsync();
         }
 
-        // GET: api/Programs/{id}
+        // GET: api/AdminDash/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Programs>> GetProgram(string id)
         {
@@ -38,23 +39,24 @@ namespace EduTrackAcademics.Controllers
             return program;
         }
 
-        // POST: api/Programs
+        // POST: api/AdminDash
         [HttpPost]
         public async Task<ActionResult<Programs>> CreateProgram(Programs program)
         {
+            // Model validation happens automatically because of [ApiController]
             _context.Set<Programs>().Add(program);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetProgram), new { id = program.ProgramId }, program);
         }
 
-        // PUT: api/Programs/{id}
+        // PUT: api/AdminDash/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProgram(string id, Programs program)
         {
             if (id != program.ProgramId)
             {
-                return BadRequest();
+                return BadRequest("Program ID mismatch.");
             }
 
             _context.Entry(program).State = EntityState.Modified;
@@ -78,7 +80,7 @@ namespace EduTrackAcademics.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Programs/{id}
+        // DELETE: api/AdminDash/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProgram(string id)
         {
@@ -100,3 +102,4 @@ namespace EduTrackAcademics.Controllers
         }
     }
 }
+
