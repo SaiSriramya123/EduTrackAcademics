@@ -11,7 +11,7 @@ namespace EduTrackAcademics.Model
         public string ProgressID { get; set; }  // unique code for each course
 
         [Required]
-        [RegularExpression(@"^\d+$", ErrorMessage = "EnrollmentId must be numeric.")]
+      //  [RegularExpression(@"^\d+$", ErrorMessage = "EnrollmentId must be numeric.")]
         public int EnrollmentId { get; set; } // id for student after enrolling, with this we can get details
 
         [Required]
