@@ -24,6 +24,8 @@ namespace EduTrackAcademics.Model
         public int Credits { get; set; }
 
         public bool Status { get; set; }
+        [Required][RegularExpression(@"^[A-Z]{2}$", ErrorMessage = "College code must be alphanumeric.")] 
+        public string CollegeCode { get; set; }
         //public virtual Course Course { get; set; }
         //public virtual Module Module { get; set; }
         //public virtual Attendance Attendance { get; set; }

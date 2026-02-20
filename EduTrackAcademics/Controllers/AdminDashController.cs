@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using EduTrackAcademics.Data;
 using EduTrackAcademics.Model;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,11 +9,11 @@ namespace EduTrackAcademics.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProgramsController : ControllerBase
+    public class AdminDashController : ControllerBase
     {
-        private readonly DbContext _context;
+        private readonly EduTrackAcademicsContext _context;
 
-        public ProgramsController(DbContext context)
+        public AdminDashController(EduTrackAcademicsContext context)
         {
             _context = context;
         }
