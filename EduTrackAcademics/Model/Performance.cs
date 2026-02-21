@@ -10,7 +10,7 @@ namespace EduTrackAcademics.Model
         [RegularExpression(@"^[A-Za-z0-9_-]+$", ErrorMessage = "ProgressID must be alphanumeric and may include dashes or underscores.")]
         public string ProgressID { get; set; }  // unique code for each course
 
-        [Required]
+        //[Required]
       //  [RegularExpression(@"^\d+$", ErrorMessage = "EnrollmentId must be numeric.")]
         public int EnrollmentId { get; set; } // id for student after enrolling, with this we can get details
 

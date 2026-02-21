@@ -2,24 +2,27 @@
 
 namespace EduTrackAcademics.Services
 {
-    public class PerformanceService
+    public class PerformanceService:IPerformanceService
     {
-        private readonly PerformanceRepository _repo;
-        public PerformanceService()
+        private readonly IPerformanceRepository _repo;
+        public PerformanceService(IPerformanceRepository repo)
         {
-            _repo = new PerformanceRepository();
+            _repo = repo;
         }
-        public decimal GetAverageScore(int enrollementId)
+        public decimal GetAverageScore(int enrollmentId)
         {
-            var data = _repo.GetDummyData();
-          var avgresult= (from p in data
-                          where p.EnrollmentId == enrollementId
-                          select p.AvgScore).DefaultIfEmpty(0).Average();
-            return avgresult;
-                          
+            return _repo.GetAverageScore(enrollmentId);
         }
-        
-        
+       
+        public decimal GetCompletionPercentage(int enrollmentId)
+        {
+            return _repo.GetCompletionPercentage(enrollmentId);
+
         }
     }
+}
+
+
+    
+
 

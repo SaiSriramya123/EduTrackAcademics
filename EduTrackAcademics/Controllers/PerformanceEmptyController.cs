@@ -11,16 +11,28 @@ namespace EduTrackAcademics.Controllers
     {
 
         //this part is done to connect this controller to the database to fetch the data.
-        private readonly PerformanceService _service;
-        public PerformanceEmptyController()
+        private readonly IPerformanceService _service;
+        public PerformanceEmptyController(IPerformanceService service)
         {
-            _service = new PerformanceService();
+            _service = service;
         }
-        [HttpGet("average/{enrollmentId}")]
-        public IActionResult GetAverage(int EnrollmentId)
+
+        [HttpGet]
+        public ActionResult<decimal> GetAverage([FromQuery] int enrollmentId)
         {
-            var result = _service.GetAverageScore( EnrollmentId);
+            var result = _service.GetAverageScore(enrollmentId);
+
+            if (result == 0)
+                return NotFound($"No record found for EnrollmentId {enrollmentId}");
+
             return Ok(result);
+        }
+
+        [HttpGet("completion")]
+        public IActionResult GetCompletionPercentage(int enrollmentId)
+        {
+            var result=_service.GetCompletionPercentage(enrollmentId);
+            return  Ok(result);
         }
     }
 

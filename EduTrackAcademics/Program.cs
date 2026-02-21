@@ -3,7 +3,10 @@ using EduTrackAcademics.Dummy;
 using EduTrackAcademics.Repository;
 using EduTrackAcademics.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;	
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<EduTrackAcademicsContext>(options =>
@@ -11,6 +14,9 @@ builder.Services.AddDbContext<EduTrackAcademicsContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ICoordinatorService, CoordinatorService>(); builder.Services.AddScoped<ICoordinatorrepo, Coordinatorrepo>(); builder.Services.AddSingleton<DummyInstructor>();
+builder.Services.AddScoped<IPerformanceRepository, PerformanceRepository>();
+builder.Services.AddScoped<IPerformanceService, PerformanceService>();
+
 
 // Add services to the container.
 
