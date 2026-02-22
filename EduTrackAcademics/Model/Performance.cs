@@ -30,5 +30,9 @@ namespace EduTrackAcademics.Model
         [Range(0, 100, ErrorMessage = "AvgScore must be between 0 and 100.")]
         [RegularExpression(@"^\d{1,3}(\.\d{1,2})?$", ErrorMessage = "AvgScore must be a decimal with up to 3 digits before and 2 digits after the decimal.")]
         public decimal AvgScore { get; set; }
+        [Required]
+        public int BatchId { get; set; }
+        [Required]
+        public int InstructorId { get; set; }
     }
 }

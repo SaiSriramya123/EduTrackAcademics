@@ -1,4 +1,6 @@
-﻿using EduTrackAcademics.Repository;
+﻿using EduTrackAcademics.Model;
+using EduTrackAcademics.Repository;
+using System.Collections.Generic;
 
 namespace EduTrackAcademics.Services
 {
@@ -18,6 +20,18 @@ namespace EduTrackAcademics.Services
         {
             return _repo.GetCompletionPercentage(enrollmentId);
 
+        }
+        public DateTime GetLastModifiedDate(int enrollmentId)
+        {
+            return _repo.GetLastModifiedDate(enrollmentId);
+        }
+        public List<Performance> GetInstructorBatches(int instructorId)
+        {
+            return _repo.GetInstructorBatches(instructorId);
+        }
+        public List <Performance> GetBatchPerformance(int batchId)
+        {
+            return _repo.GetBatchPerformance(batchId);
         }
     }
 }

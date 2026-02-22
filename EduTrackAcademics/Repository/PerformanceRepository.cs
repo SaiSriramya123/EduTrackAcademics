@@ -1,41 +1,56 @@
 ﻿using EduTrackAcademics.Model;
+using System;
+using System.Linq;
+using EduTrackAcademics.Dummy;
 
 namespace EduTrackAcademics.Repository
 {
     public class PerformanceRepository : IPerformanceRepository
     {
-        public List<Performance> GetDummyData()
+        private readonly DummyPerformance _dummy = new();
+        public decimal GetCompletionPercentage(int enrollmentId)
         {
-            return new List<Performance> {
-                new Performance { EnrollmentId = 1, AvgScore = 45 },
-                new Performance { EnrollmentId = 2, AvgScore = 67 },
-            new Performance { EnrollmentId = 3, AvgScore = 89 },
-            };
+            return (from p in _dummy.Performances
+                    where p.EnrollmentId == enrollmentId
+                    select p.CompletionPercentage).FirstOrDefault();
+
         }
         public decimal GetAverageScore(int enrollmentId)
         {
-            var data =GetDummyData();
-            return data
-                .Where(p => p.EnrollmentId == enrollmentId)
-                .Select(p => p.AvgScore)
-                .FirstOrDefault();
+            return (from p in _dummy.Performances
+                    where p.EnrollmentId == enrollmentId
+                    select p.AvgScore).FirstOrDefault();
         }
-        public List<Performance> DummyData()
+        public DateTime GetLastModifiedDate(int enrollmentId)
         {
-            return new List<Performance>
-            {
-                new Performance { EnrollmentId = 1, CompletionPercentage = 78.9m },
-                new Performance { EnrollmentId = 2, CompletionPercentage = 90.1m },
-                new Performance { EnrollmentId = 3, CompletionPercentage = 99.0m },
-            };
+            return (from p in _dummy.Performances
+                    where p.EnrollmentId == enrollmentId
+                    select p.LastUpdated).FirstOrDefault();
+
         }
-        public decimal GetCompletionPercentage(int enrollmentId)
+        public List<Performance> GetInstructorBatches(int instructorId)
         {
-            var data=DummyData();
-            return data
-                .Where(p => p.EnrollmentId == enrollmentId)
-                .Select(p => p.CompletionPercentage)
-                .FirstOrDefault();
+            var result =
+                (from p in _dummy.Performances
+                 where p.InstructorId == instructorId
+                 select p)
+                 .ToList();
+            return result;
         }
+        public List<Performance> GetBatchPerformance(int batchId)
+        {
+            var result =
+                (from p in _dummy.Performances
+                 where p.BatchId == batchId
+                 select p)
+                 .ToList();
+            return result;
+        
+
+    }
     }
 }
+
+
+
+      

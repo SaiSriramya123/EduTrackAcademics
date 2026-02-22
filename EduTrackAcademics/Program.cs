@@ -13,16 +13,16 @@ builder.Services.AddDbContext<EduTrackAcademicsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EduTrackAcademicsContext") ?? throw new InvalidOperationException("Connection string 'EduTrackAcademicsContext' not found.")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-<<<<<<< HEAD
+//<<<<<<< HEAD 
 builder.Services.AddScoped<ICoordinatorService, CoordinatorService>(); builder.Services.AddScoped<ICoordinatorrepo, Coordinatorrepo>(); builder.Services.AddSingleton<DummyInstructor>();
 builder.Services.AddScoped<IPerformanceRepository, PerformanceRepository>();
 builder.Services.AddScoped<IPerformanceService, PerformanceService>();
 
-=======
+//=======
 builder.Services.AddScoped<ICoordinatorService, CoordinatorService>(); 
 builder.Services.AddScoped<ICoordinatorrepo, Coordinatorrepo>(); 
 builder.Services.AddSingleton<DummyInstructor>();
->>>>>>> 498c5426281e19f4a745bd01b1db94b40e2cf947
+//>>>>>>> 498c5426281e19f4a745bd01b1db94b40e2cf947
 
 // Add services to the container.
 

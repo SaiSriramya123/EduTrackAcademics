@@ -30,9 +30,11 @@ namespace EduTrackAcademics.Model
 
 		[Required(ErrorMessage = "Program is required.")]
 		[RegularExpression(
-	@"^(Computer Science (?:&|&amp;) Engineering \(CSE\)|Electronics (?:&|&amp;) Communication Engineering \(ECE\)|Accounting 
-    (?:&|&amp;) Finance|VLSI Design|Robotics (?:&|&amp;) Automation|Organic Chemistry|Climate Change (?:&|&amp;) Sustainability)$",
-	ErrorMessage = "Please select a valid program from the list.")]
+	          @"^(Computer Science (?:&|&amp;) Engineering \(CSE\)|Electronics (?:&|&amp;) Communication Engineering \(ECE\)|Accounting 
+              (?:&|&amp;) Finance $", ErrorMessage = "Invalid Program Details")]
+
+//VLSI Design|Robotics (?:&|&amp;) Automation|Organic Chemistry|Climate Change (?:&|&amp;) Sustainability)$",
+//	ErrorMessage = "Please select a valid program from the list.")]
 		public string StudentProgram { get; set; }
 
 		[Required(ErrorMessage = "Academic year is required.")]
@@ -51,6 +53,17 @@ namespace EduTrackAcademics.Model
 			ErrorMessage = "Password must be 8–64 chars and include uppercase, lowercase, number, and special character.")]
 		public string StudentPassword { get; set; }
 
+		
+		//Additional fields for student profile
+		public decimal? CGPA { get; set; }
+		public string? Nationality{ get; set; }
+		public string? Citizenship { get; set; }
+		public string? dayscholarHosteller { get; set; }
+		public decimal? GateScore { get; set; }
+		public string? Certifications { get; set; }
+		public string? Clubs_Chapters { get; set; }
+		public string? Achievements { get; set; }
+		public int? EducationGap { get; set; }
 		public byte[] StudentResume { get; set; }
 
 		public virtual ICollection<Programs> Pgmdetails { get; set; }

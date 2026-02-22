@@ -17,26 +17,50 @@ namespace EduTrackAcademics.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public ActionResult<decimal> GetAverage([FromQuery] int enrollmentId)
-        {
-            var result = _service.GetAverageScore(enrollmentId);
-
-            if (result == 0)
-                return NotFound($"No record found for EnrollmentId {enrollmentId}");
-
-            return Ok(result);
-        }
-
-        [HttpGet("completion")]
+        [HttpGet("completion/{enrollmentId}")]
         public IActionResult GetCompletionPercentage(int enrollmentId)
         {
-            var result=_service.GetCompletionPercentage(enrollmentId);
-            return  Ok(result);
+            return Ok(_service.GetCompletionPercentage(enrollmentId));
         }
+        [HttpGet("average/{enrollmentId}")]
+        public IActionResult GetAverageScore(int enrollmentId)
+        {
+            return Ok(_service.GetAverageScore(enrollmentId));
+        }
+        [HttpGet("lastupdated/{enrollmentId}")]
+        public IActionResult GetLastUpdated(int enrollmentId)
+        {
+            return Ok(_service.GetLastModifiedDate(enrollmentId));
+        }
+        [HttpGet("instructor-batches/{instructorId}")]
+
+        public IActionResult GetInstructorBatches(int instructorId)
+
+        {
+
+            var result = _service.GetInstructorBatches(instructorId);
+
+            return Ok(result);
+
+        }
+
+        [HttpGet("batch-performance/{batchId}")]
+
+        public IActionResult GetBatchPerformance(int batchId)
+
+        {
+
+            var result = _service.GetBatchPerformance(batchId);
+
+            return Ok(result);
+
+        }
+
     }
-
-
-
 }
+
+
+
+
+
 

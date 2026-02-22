@@ -6,7 +6,6 @@ namespace EduTrackAcademics.Controllers
 	{
 		[Route("api/[controller]")]
 		[ApiController]
-		[ServiceFilter(typeof(ExceptionHandlerAttribute))]
 		public class StudentsController : ControllerBase
 		{
 			private readonly IStudentService _service;
