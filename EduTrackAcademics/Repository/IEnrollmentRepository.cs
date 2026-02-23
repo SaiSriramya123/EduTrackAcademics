@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using EducationTrackProject.Models;
+using CourseModule = EduTrackAcademics.Model.Module;
 
 namespace EduTrackAcademics.Repository
 {
@@ -11,6 +12,13 @@ namespace EduTrackAcademics.Repository
 		bool CheckIdExists(string enrollmentId);
 
 		int GetEnrollmentCount();
-		//List<Module> GetCourseContent(string courseId);
+
+		bool IsEnrolled(string studentId, string courseId);
+
+		List<CourseModule> GetModulesByCourse(string courseId);
+
+		double GetCourseProgressPercentage(string studentId, string courseId);
+
+		void UpdateEnrollmentStatus(string studentId, string courseId, string status);
 	}
 }

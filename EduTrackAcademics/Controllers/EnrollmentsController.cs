@@ -8,6 +8,7 @@ using EduTrackAcademics.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using CourseModule = EduTrackAcademics.Model.Module;
 
 namespace EduTrackAcademics.Controllers
 {
@@ -35,103 +36,45 @@ namespace EduTrackAcademics.Controllers
 			});
 		}
 
+		[HttpGet]
+		public IActionResult ViewCourseContent(string studentId,string courseId)
+		{
 
-		//// GET: api/Enrollments
-		//[HttpGet]
-  //      public async Task<ActionResult<IEnumerable<Enrollment>>> GetEnrollment()
-  //      {
-  //          return await _context.Enrollment.ToListAsync();
-  //      }
+			List<CourseModule> modules = _service.GetContentForStudent(studentId, courseId);
 
-  //      // GET: api/Enrollments/5
-  //      [HttpGet("{id}")]
-  //      public async Task<ActionResult<Enrollment>> GetEnrollment(string id)
-  //      {
-  //          var enrollment = await _context.Enrollment.FindAsync(id);
+			return Ok(new
+			{
+				status = 200,
+				msg = modules
+			});
+		}
 
-  //          if (enrollment == null)
-  //          {
-  //              return NotFound();
-  //          }
 
-  //          return enrollment;
-  //      }
+		[HttpGet]
+		public IActionResult GetCourseProgress(string studentId,string courseId)
+		{
 
-  //      // PUT: api/Enrollments/5
-  //      // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-  //      [HttpPut("{id}")]
-  //      public async Task<IActionResult> PutEnrollment(string id, Enrollment enrollment)
-  //      {
-  //          if (id != enrollment.EnrollmentId)
-  //          {
-  //              return BadRequest();
-  //          }
+			double progress = _service.GetCourseProgressPercentage(studentId, courseId);
 
-  //          _context.Entry(enrollment).State = EntityState.Modified;
+			return Ok(new
+			{
+				status=200,
+				Message = progress
+			});
+		}
 
-  //          try
-  //          {
-  //              await _context.SaveChangesAsync();
-  //          }
-  //          catch (DbUpdateConcurrencyException)
-  //          {
-  //              if (!EnrollmentExists(id))
-  //              {
-  //                  return NotFound();
-  //              }
-  //              else
-  //              {
-  //                  throw;
-  //              }
-  //          }
+		[HttpPost("update-status")]
+		public IActionResult ProcessCourseCompletion(string studentId,string courseId)
+		{
+			
+			bool res=_service.ProcessCourseCompletion(studentId, courseId);
 
-  //          return NoContent();
-  //      }
-
-  //      // POST: api/Enrollments
-  //      // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-  //      [HttpPost]
-  //      public async Task<ActionResult<Enrollment>> PostEnrollment(Enrollment enrollment)
-  //      {
-  //          _context.Enrollment.Add(enrollment);
-  //          try
-  //          {
-  //              await _context.SaveChangesAsync();
-  //          }
-  //          catch (DbUpdateException)
-  //          {
-  //              if (EnrollmentExists(enrollment.EnrollmentId))
-  //              {
-  //                  return Conflict();
-  //              }
-  //              else
-  //              {
-  //                  throw;
-  //              }
-  //          }
-
-  //          return CreatedAtAction("GetEnrollment", new { id = enrollment.EnrollmentId }, enrollment);
-  //      }
-
-  //      // DELETE: api/Enrollments/5
-  //      [HttpDelete("{id}")]
-  //      public async Task<IActionResult> DeleteEnrollment(string id)
-  //      {
-  //          var enrollment = await _context.Enrollment.FindAsync(id);
-  //          if (enrollment == null)
-  //          {
-  //              return NotFound();
-  //          }
-
-  //          _context.Enrollment.Remove(enrollment);
-  //          await _context.SaveChangesAsync();
-
-  //          return NoContent();
-  //      }
-
-  //      private bool EnrollmentExists(string id)
-  //      {
-  //          return _context.Enrollment.Any(e => e.EnrollmentId == id);
-  //      }
-    }
+			return Ok(new
+			{
+				status = 200,
+				message = res ? "Enrollment status updated successfully." : "Failed to update enrollment status."
+			}); 
+		}
+			
+	}
 }

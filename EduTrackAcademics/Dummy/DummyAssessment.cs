@@ -1,7 +1,6 @@
 ﻿namespace EduTrackAcademics.Dummy
 {
-	public class DummyEnrollmentId
+	public class DummyAssessment
 	{
-
 	}
 }
