@@ -18,11 +18,25 @@ namespace EduTrackAcademics.Model
         [RegularExpression(@"^\d{4}$",
             ErrorMessage = "Academicyear must be in 4 digits")]
         public int AcademicYear { get; set; }
+<<<<<<< HEAD
         [Required]
       
         public virtual Course Course { get; set; }
         public virtual Module Module { get; set; }
         public virtual Attendance Attendance { get; set; }
+=======
+
+        [RegularExpression(@"^\d{1,10}$",
+            ErrorMessage = "Credits must be a nuumber.")]
+        public int Credits { get; set; }
+
+        public bool Status { get; set; }
+        [Required][RegularExpression(@"^[A-Z]{2}$", ErrorMessage = "College code must be alphanumeric.")] 
+        public string CollegeCode { get; set; }
+        //public virtual Course Course { get; set; }
+        //public virtual Module Module { get; set; }
+        //public virtual Attendance Attendance { get; set; }
+>>>>>>> 2f863bfb0e55ccdde94f00cc3325f740cbb6ab15
     }
 }
 
