@@ -25,5 +25,9 @@ namespace EduTrackAcademics.Model
 		[Required]
 		[RegularExpression(@"^(Open|Closed)$", ErrorMessage = "Status must be Open or Closed.")]
 		public string Status { get; set; }
+
+		public int? MarksObtained {  get; set; }
+		public string? Feedback { get; set; }
+		public DateTime CreatedOn { get; set; } = DateTime.Now;
 	}
 }
