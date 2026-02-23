@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
 using EducationTrackProject.Models;
 using EduTrackAcademics.Repository;
+using EduTrackAcademics.Exceptions;
+using EduTrackAcademics.Dummy;
 using Microsoft.EntityFrameworkCore;
+using CourseModule = EduTrackAcademics.Model.Module;
 
 namespace EduTrackAcademics.Services
 {
@@ -18,10 +21,10 @@ namespace EduTrackAcademics.Services
 			int count = _repo.GetEnrollmentCount() + 1;
 			var Enrollment_Id = $"en_{(count + 1):D3}";
 
-			//if (_repo.CheckIdExists(Enrollment_Id))
-			//{
-			//	throw new EnrollmentAlreadyExistsException($"Enrollment ID {Enrollment_Id} already exists in the system.");
-			//}
+			if (_repo.CheckIdExists(Enrollment_Id))
+			{
+				throw new EnrollmentAlreadyExistsException($"Enrollment ID {Enrollment_Id} already exists in the system.");
+			}
 
 			var newEnrollment = new Enrollment
 			{
@@ -38,14 +41,33 @@ namespace EduTrackAcademics.Services
 			return _repo.AddEnrollment(newEnrollment);
 		}
 
-		//public List<Module> GetCourseContent(string courseId)
-		//{
-		//	var data = _repo.GetCourseContent(courseId);
+		public List<CourseModule> GetContentForStudent(string studentId, string courseId)
+		{
+			bool isEnrolled = _repo.IsEnrolled(studentId, courseId);
 
-		//	if (data == null || data.Count == 0)
-		//		throw new BusinessException("No modules or content found for this course.");
+			if (!isEnrolled)
+				throw new EnrollmentNotExistsException("You must enroll to view this content.", 403);
 
-		//	return data;
-		//}
+			return _repo.GetModulesByCourse(courseId);
+		}
+
+		public double GetCourseProgressPercentage(string studentId, string courseId)
+		{
+			
+			return _repo.GetCourseProgressPercentage(studentId, courseId);
+		}
+
+		public bool ProcessCourseCompletion(string studentId, string courseId)
+		{
+			double currentProgress = GetCourseProgressPercentage(studentId, courseId);
+
+			if (currentProgress >= 100)
+			{
+				_repo.UpdateEnrollmentStatus(studentId, courseId, "Completed");
+				return true;
+			}
+
+			return false;
+		}
 	}
 }
