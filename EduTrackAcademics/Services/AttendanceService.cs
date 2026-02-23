@@ -30,7 +30,7 @@ namespace EduTrackAcademics.Services
 
 		public void MarkAttendance(Attendance attendance)
 		{
-			if (_repo.Exists(attendance.EnrollmentID, attendance.SessionDate))
+			if (_repo.Exists(attendance.EnrollmentID!, attendance.SessionDate))
 				throw new Exception("Attendance already marked");
 
 			_repo.AddAttendance(attendance);

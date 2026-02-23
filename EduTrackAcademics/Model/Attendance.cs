@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using EducationTrackProject.Models;
 
 namespace EduTrackAcademics.Model
 {
@@ -11,9 +12,9 @@ namespace EduTrackAcademics.Model
 		public string AttendanceID { get; set; }
 
 		[Required(ErrorMessage = "Enrollment ID is required")]
-		//[ForeignKey("Enrollment")]
+		[ForeignKey("Enrollment")]
 		public string EnrollmentID { get; set; }
-		//public Enrollment Enrollment { get; set; }
+		public Enrollment Enrollment { get; set; }
 
 		[Required(ErrorMessage = "Batch ID is required")]
 		[ForeignKey("Batch")]
