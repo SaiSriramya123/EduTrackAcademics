@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using EducationTrackProject.Models;
+using CourseModule = EduTrackAcademics.Model.Module;
 
 namespace EduTrackAcademics.Services
 {
@@ -7,6 +8,10 @@ namespace EduTrackAcademics.Services
 	{
 		int AddEnrollment(string studentId, string courseId);
 
-		//List<Module> GetCourseContent(string courseId);
-	}
+		List<CourseModule> GetContentForStudent(string studentId, string courseId);
+
+		double GetCourseProgressPercentage(string studentId, string courseId);
+
+		bool ProcessCourseCompletion(string studentId, string courseId);
+}
 }

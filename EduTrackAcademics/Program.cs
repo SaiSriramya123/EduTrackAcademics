@@ -14,6 +14,14 @@ builder.Services.AddScoped<ICoordinatorService, CoordinatorService>();
 builder.Services.AddScoped<ICoordinatorrepo, Coordinatorrepo>(); 
 builder.Services.AddSingleton<DummyInstructor>();
 
+builder.Services.AddScoped<IEnrollmentService, EnrollmentService>();
+builder.Services.AddScoped<IEnrollmentRepository, EnrollmentRepository>();
+builder.Services.AddScoped<IStudentProgressesService, StudentProgressesService>();
+builder.Services.AddScoped<IStudentProgressesRepository, StudentProgressesRepository>();
+builder.Services.AddSingleton<DummyEnrollment>();
+
+
+
 // Add services to the container.
 
 builder.Services.AddControllers();

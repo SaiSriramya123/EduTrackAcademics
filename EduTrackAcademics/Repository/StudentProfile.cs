@@ -12,7 +12,7 @@ namespace EduTrackAcademics.Repository
 		{
 			_repo = repo;
 		}
-		
+
 		public async List<int> UpdateStudentEmail(string id, string newEmail)
 		{
 			var student = await _repo.Student.FindAsync(id);
