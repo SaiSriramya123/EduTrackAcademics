@@ -12,26 +12,24 @@ namespace EduTrackAcademics.Controllers
 	public class AttendanceController : ControllerBase
 	{
 		private readonly IAttendanceService _attendanceService;
-		private readonly DummyAttendance _dmat;
-		public AttendanceController(IAttendanceService attendanceService, DummyAttendance dmat)
+		private readonly DummyAttendance _dummy;
+		public AttendanceController(IAttendanceService attendanceService, DummyAttendance dummy)
 		{
 			_attendanceService = attendanceService;
-			_dmat = dmat;
+			_dummy = dummy;
 		}
 
-		public AttendanceController(IAttendanceService attendanceService)
+		[HttpGet("sample")]
+		public IActionResult GetSampleData()
 		{
-			_attendanceService = attendanceService;
+			return Ok(_dummy.GetSample());
 		}
 
-
-		[HttpGet("GetAllAttendance")]
-		public IActionResult GetAll()
-			=> Ok(_attendanceService.GetAllAttendance());
-		public ActionResult<List<Attendance>> GetAttendance()
+		[HttpGet]
+		public IActionResult GetAllAttendance()
 		{
-			var attendanceRecords = _dmat.GetSample().ToList();
-			return Ok(attendanceRecords);
+			var data = _attendanceService.GetAllAttendance();
+			return Ok(data);
 		}
 
 		[HttpGet("{id}")]
@@ -44,33 +42,27 @@ namespace EduTrackAcademics.Controllers
 
 		[HttpGet("batch/{batchId}")]
 		public IActionResult GetByBatch(string batchId)
-			=> Ok(_attendanceService.GetBatchAttendance(batchId));
+		{
+			var data = _attendanceService.GetBatchAttendance(batchId);
+			return Ok(data);
+		}
 
 		[HttpGet("date")]
 		public IActionResult GetByDate(string batchId, DateTime date)
-			=> Ok(_attendanceService.GetAttendanceByDate(batchId, date));
+		{
+			var data = _attendanceService.GetAttendanceByDate(batchId, date);
+			return Ok(data);
+		}
 
-
-		// Mark attendance
 		[HttpPost]
 		public IActionResult MarkAttendance([FromBody] Attendance attendance)
 		{
+			if (!ModelState.IsValid)
+				return BadRequest(ModelState);
+
 			_attendanceService.MarkAttendance(attendance);
+
 			return Ok("Attendance marked successfully");
-		}
-
-		//Get by batch
-	   [HttpGet("batch/{batchId}")]
-		public IActionResult GetBatchAttendance(string batchId)
-		{
-			return Ok(_attendanceService.GetBatchAttendance(batchId));
-		}
-
-		//Get by date
-	   [HttpGet("date")]
-		public IActionResult GetByDate(string batchId, DateTime date)
-		{
-			return Ok(_attendanceService.GetAttendanceByDate(batchId, date));
 		}
 
 		//Update attendance
@@ -86,7 +78,7 @@ namespace EduTrackAcademics.Controllers
 		public IActionResult SoftDeleteAttendance(string id, string reason)
 		{
 			_attendanceService.SoftDeleteAttendance(id, reason);
-			return Ok("Attendance deleted");
+			return Ok("Attendance soft deleted");
 		}
 
 		[HttpDelete("{id}")]

@@ -19,20 +19,14 @@ namespace EduTrackAcademics.Services
 			=> _repo.GetById(id);
 
 		public List<Attendance> GetBatchAttendance(string batchId)
-			=> _repo.GetByBatch(batchId);
+		{
+			return _repo.GetByBatch(batchId);
+		}
 
 		public List<Attendance> GetAttendanceByDate(string batchId, DateTime date)
-			=> _repo.GetByDate(batchId, date);
-
-		//public List<Attendance> GetBatchAttendance(string batchId)
-		//{
-		//	return _repo.GetByBatch(batchId);
-		//}
-
-		//public List<Attendance> GetAttendanceByDate(string batchId, DateTime date)
-		//{
-		//	return _repo.GetByDate(batchId, date);
-		//}
+		{
+			return _repo.GetByDate(batchId, date);
+		}
 
 		public void MarkAttendance(Attendance attendance)
 		{
@@ -58,12 +52,6 @@ namespace EduTrackAcademics.Services
 
 			_repo.UpdateAttendance(record);
 		}
-
-		//public void SoftDeleteAttendance(string id, string reason)
-		//	=> _repo.SoftDeleteAttendance(id, reason);
-
-		//public void DeleteAttendance(string id)
-		//	=> _repo.Delete(id);
 
 		public void SoftDeleteAttendance(string id, string reason)
 		{

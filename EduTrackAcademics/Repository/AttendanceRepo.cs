@@ -1,6 +1,7 @@
 ﻿using EduTrackAcademics.Data;
 using EduTrackAcademics.Model;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace EduTrackAcademics.Repository
 {
