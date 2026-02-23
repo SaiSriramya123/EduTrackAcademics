@@ -8,7 +8,7 @@ namespace EduTrackAcademics.Model
 	{
 		[Key]
 		[Required]
-		[RegularExpression(@"^[A-Za-z0-9\-]+$", ErrorMessage = "ContentId must be AlphaNumeric.")]
+		[RegularExpression(@"^[A-Z0-9\-]+$", ErrorMessage = "ContentId must be AlphaNumeric.")]
 		public string ContentID { get; set; }
 
 		[Required]
@@ -22,6 +22,7 @@ namespace EduTrackAcademics.Model
 		[Required]
 		[StringLength(150)]
 		public string Title { get; set; }
+
 		[Required]
 		[Url(ErrorMessage = "Invalid content URL.")]
 		public string ContentURI { get; set; }

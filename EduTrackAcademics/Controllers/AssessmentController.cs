@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EduTrackAcademics.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/[assessments]")]
 	[ApiController]
 	public class AssessmentController : ControllerBase
 	{

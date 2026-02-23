@@ -23,6 +23,14 @@ builder.Services.AddScoped<IAttendanceService, AttendanceService>();
 builder.Services.AddScoped<IAttendanceRepo, AttendanceRepo>();
 builder.Services.AddSingleton<DummyAttendance>();
 
+builder.Services.AddScoped<IModuleService, ModuleService>();
+builder.Services.AddScoped<IModuleRepo, ModuleRepo>();
+builder.Services.AddSingleton<DummyModule>();
+
+builder.Services.AddScoped<IContentService, ContentService>();
+builder.Services.AddScoped<IContentRepo, ContentRepo>();
+builder.Services.AddSingleton<DummyContent>();
+
 builder.Services.AddScoped<IAssessmentService, AssessmentService>();
 builder.Services.AddScoped<IAssessmentRepo, AssessmentRepo>();
 builder.Services.AddSingleton<DummyAssessment>();
@@ -61,7 +69,7 @@ if (app.Environment.IsDevelopment())
 		options.RoutePrefix = "swagger";
 	});
 }
-app.UseDeveloperExceptionPage();
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

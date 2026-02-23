@@ -7,7 +7,7 @@ using EduTrackAcademics.Dummy;
 
 namespace EduTrackAcademics.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/[attendance]")]
 	[ApiController]
 	public class AttendanceController : ControllerBase
 	{
