@@ -3,4 +3,4 @@
 GET {{EduTrackAcademics_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
+

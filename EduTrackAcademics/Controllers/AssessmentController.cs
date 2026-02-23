@@ -5,7 +5,7 @@ namespace EduTrackAcademics.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class AttendanceCont : ControllerBase
+	public class AssessmentController : ControllerBase
 	{
 	}
 }
