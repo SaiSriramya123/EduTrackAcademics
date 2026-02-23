@@ -1,28 +1,91 @@
-﻿using EduTrackAcademics.Model;
+﻿using EduTrackAcademics.Data;
+using EduTrackAcademics.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace EduTrackAcademics.Repository
 {
 	public class AttendanceRepo : IAttendanceRepo
 	{
-		public List<Attendance> GetAll()
+		private readonly EduTrackAcademicsContext _context;
+		public AttendanceRepo(EduTrackAcademicsContext context)
 		{
-			//fetch from db
+			_context = context;
 		}
-		public Attendance GetById(string attendanceId)
+
+		public List<Attendance> GetAllAttendance()
 		{
-			// fetch single record
+			return _context.Attendance
+				.Where(a => !a.IsDeleted)
+				.ToList();
 		}
+
+		public List<Attendance> GetByBatch(string batchId)
+		{
+			return _context.Attendance
+				.Where(a => a.BatchID == batchId && !a.IsDeleted)
+				.ToList();
+		}
+
+		public List<Attendance> GetByDate(string batchId, DateTime date)
+		{
+			return _context.Attendance
+				.Where(a => a.BatchID == batchId && a.SessionDate.Date == date.Date && !a.IsDeleted)
+				.ToList();
+		}
+
+		public Attendance GetById(string id)
+		{
+			return _context.Attendance.FirstOrDefault(a => a.AttendanceID == id);
+		}
+
 		public void AddAttendance(Attendance attendance)
 		{
-			// insert into DB
+			attendance.AttendanceID = GenerateAttendanceId();
+			_context.Attendance.Add(attendance);
+			_context.SaveChanges();
 		}
+
 		public void UpdateAttendance(Attendance attendance)
 		{
-			//update record
+			_context.Attendance.Update(attendance);
+			_context.SaveChanges();
 		}
-		public void DeleteAttendance(string attendanceId)
+
+		public void SoftDeleteAttendance(string id, string reason)
 		{
-			//delete record
+			var record = GetById(id);
+
+			if (record != null)
+			{
+				record.IsDeleted = true;
+				record.DeletionReason = reason;
+				record.DeletionDate = DateTime.Now;
+
+				_context.SaveChanges();
+			}
+		}
+
+		public void Delete(string id)
+		{
+			var record = GetById(id);
+			if (record != null)
+			{
+				_context.Attendance.Remove(record);
+				_context.SaveChanges();
+			}
+		}
+
+		public bool Exists(string enrollmentId, DateTime date)
+		{
+			return _context.Attendance.Any(a =>
+				a.EnrollmentID == enrollmentId &&
+				a.SessionDate.Date == date.Date &&
+				!a.IsDeleted);
+		}
+
+		public string GenerateAttendanceId()
+		{
+			return "AT" + DateTime.Now.Ticks.ToString().Substring(10);
 		}
 	}
 }

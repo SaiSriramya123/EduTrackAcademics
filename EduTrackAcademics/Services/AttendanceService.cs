@@ -5,36 +5,76 @@ namespace EduTrackAcademics.Services
 {
 	public class AttendanceService : IAttendanceService
 	{
-		private readonly IAttendanceRepo _attendanceRepo;
+		private readonly IAttendanceRepo _repo;
 
-		public AttendanceService(IAttendanceRepo attendanceRepo)
+		public AttendanceService(IAttendanceRepo repo)
 		{
-			_attendanceRepo = attendanceRepo;
+			_repo = repo;
 		}
 
-		public List<Attendance> GetAttendanceList()
-		{
-			return _attendanceRepo.GetAll();
-		}
+		public List<Attendance> GetAllAttendance() 
+			=> _repo.GetAllAttendance();
 
-		public Attendance GetAttendance(string id)
-		{
-			return _attendanceRepo.GetById(id);
-		}
+		public Attendance GetById(string id)
+			=> _repo.GetById(id);
+
+		public List<Attendance> GetBatchAttendance(string batchId)
+			=> _repo.GetByBatch(batchId);
+
+		public List<Attendance> GetAttendanceByDate(string batchId, DateTime date)
+			=> _repo.GetByDate(batchId, date);
+
+		//public List<Attendance> GetBatchAttendance(string batchId)
+		//{
+		//	return _repo.GetByBatch(batchId);
+		//}
+
+		//public List<Attendance> GetAttendanceByDate(string batchId, DateTime date)
+		//{
+		//	return _repo.GetByDate(batchId, date);
+		//}
 
 		public void MarkAttendance(Attendance attendance)
 		{
-			_attendanceRepo.AddAttendance(attendance);
+			if (_repo.Exists(attendance.EnrollmentID, attendance.SessionDate))
+				throw new Exception("Attendance already marked");
+
+			_repo.AddAttendance(attendance);
 		}
 
-		public void UpdateAttendance(Attendance attendance)
+		public void UpdateAttendance(string id, bool status, string reason)
 		{
-			_attendanceRepo.UpdateAttendance(attendance);
+			var record = _repo.GetById(id);
+
+			if (record == null)
+				throw new Exception("Record not found");
+
+			if (string.IsNullOrWhiteSpace(reason))
+				throw new Exception("Reason required for update");
+
+			record.Status = status;
+			record.UpdateReason = reason;
+			record.UpdatedOn = DateTime.Now;
+
+			_repo.UpdateAttendance(record);
 		}
 
-		public void RemoveAttendance(string id)
+		//public void SoftDeleteAttendance(string id, string reason)
+		//	=> _repo.SoftDeleteAttendance(id, reason);
+
+		//public void DeleteAttendance(string id)
+		//	=> _repo.Delete(id);
+
+		public void SoftDeleteAttendance(string id, string reason)
 		{
-			_attendanceRepo.DeleteAttendance(id);
+			if (string.IsNullOrWhiteSpace(reason))
+				throw new Exception("Deletion reason required");
+
+			_repo.SoftDeleteAttendance(id, reason);
+		}
+		public void DeleteAttendance(string id)
+		{
+			_repo.Delete(id);
 		}
 	}
 }
